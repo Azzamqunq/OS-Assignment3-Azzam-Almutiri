@@ -32,11 +32,11 @@
 
 | Field | Your Answer |
 |-------|-------------|
-| **Full Name** | [Write your full name here] |
-| **Student ID** | [Write your student ID here] |
-| **University Email** | [yourid]@std.psau.edu.sa |
-| **GitHub Username** | [your-github-username] |
-| **Repository Link** | [Paste your repository link here] |
+| **Full Name** | [Azzam mishal almutiri] |
+| **Student ID** | 446050922 |
+| **University Email** | 446050922@std.psau.edu.sa |
+| **GitHub Username** | Azzamqunq |
+| **Repository Link** | https://github.com/Azzamqunq/OS-Assignment3-Azzam-Almutiri |
  
 ---
 
