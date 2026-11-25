@@ -132,68 +132,128 @@
 
 ## Your Development Log
 
-### Entry 1 - [Date and Time]
-**What I did**:
+### Entry 1 - [November 22, 2026, 1:20 PM]
+**What I did**:Completed Feature 1 using ReentrantLock
 
 **Details**:
+- Added a ReentrantLock inside ReadyQueue.
+- Protected add(), poll(), processOf(), and snapshot().
+- Tested the program and pushed Feature 1 to GitHub.
 
-**Challenges**:
 
-**Solution**:
+**Challenges**: My main challenge was understanding why the ready queue needed protection when multiple CPUs accessed it at the same time i also found it difficult to understand why all four methods needed the same lock especially poll() which reads and removes a thread from the queue
 
-**Time spent**:
+
+
+**Solution**: reviewed the ReadyQueue methods and used one ReentrantLock to protect the shared list and map i added lock() and try finally to make sure only one thread could access the protected sections at a time
+
+**Time spent**:1,5 hours
 
 ---
 
-### Entry 2 - [Date and Time]
-**What I did**:
+### Entry 2 - [November 23, 2026, 3:40 AM]
+**What I did**: Completed Feature 2 by protecting the shared statistics using ReentrantLock
 
-**Details**:
+**Details**:  Declared one ReentrantLock named statsLock inside SharedStats.
 
-**Challenges**:
+Protected incrementContextSwitch(), incrementCompletedProcess(), and addServiceTime().
 
-**Solution**:
+Protected the three getter methods to ensure safe reading of shared values.
 
-**Time spent**:
+Used try/finally to release the lock after each operation.
 
----
+Ran the program five times to test Feature 2.
 
-### Entry 3 - [Date and Time]
-**What I did**:
+Committed the changes for Feature 2.
 
-**Details**:
 
-**Challenges**:
 
-**Solution**:
+**Challenges**: My main challenge was deciding whether to use one lock for the three shared counters or a separate lock for each variable. I also needed to understand why the getter methods required protection even though they only read values
 
-**Time spent**:
+**Solution**: I decided to use one ReentrantLock called statsLock because it was simpler to manage  i protected the three update methods and three getters, then tested the program to verify that the shared statistics were correct
 
----
-
-### Entry 4 - [Date and Time]
-**What I did**:
-
-**Details**:
-
-**Challenges**:
-
-**Solution**:
-
-**Time spent**:
+**Time spent**: 2,20 hours 
 
 ---
 
-### Entry 5 - [Date and Time]
-**What I did**:
+### Entry 3 - [Noember 24, 2026, 1:13 AM]
+**What I did**: Completed Feature 3 by replacing busy waiting with a counting semaphore.
 
 **Details**:
+Imported the Semaphore class.
+
+Declared readyCount inside ReadyQueue with an initial value of zero.
+
+Added release() inside add() to signal that a process was available.
+
+Added waitForProcess() using acquire() to make CPUs wait for available processes.
+
+Removed the old busy-waiting code from CpuWorker.
+
+Added signalShutdown() to wake waiting CPUs after all processes finished.
+
+Tested the program five times and confirmed that all four verification results were correct.
+
+Committed and pushed Feature 3 to GitHub.
+
+**Challenges**: The most difficult part was understanding how to replace busy waiting with a semaphore without causing the CPUs to wait forever. I also had trouble placing the shutdown method in the correct class and understanding when the waiting CPUs should stop
+
+
+**Solution**: added a counting semaphore initialized to zero and used acquire() and release() to control access to available processes. I placed signalShutdown() inside ReadyQueue to wake up the waiting CPUs when all processes finished. After completing the changes, I tested the program five times and verified that busy-waiting polls were zero.
+
+**Time spent**: 3 hours  
+
+---
+
+### Entry 4 - [November 24, 2026, 2:25 PM]
+
+**What I did**: 
+Worked on the documentation for Assignment 3 in MY_WORK.md.
+
+
+
+**Details**:
+Reviewed the instructions for the Development Log, Reflection, and Technical Answers.
+
+Documented my work on Features 1, 2, and 3.
+
+Explained the challenges I faced while implementing the synchronization features.
+
+Reviewed my Java code to connect the technical answers to my implementation.
 
 **Challenges**:
+The main challenge was explaining the synchronization concepts using examples from my own code instead of giving general definitions. I also needed to understand the difference between the original starter output and the final program output because the assignment requires both.
+
 
 **Solution**:
+ i reviewed the changes made to ReadyQueue, SharedStats, and CpuWorker and connected each modification to the problem it solved. I also reviewed the verification requirements to make sure the technical answers would use the correct program results.        
 
-**Time spent**:
+**Time spent**: 3,50 hours 
+
+---
+
+### Entry 5 - [November 26, 2026, :00 when i work i will commit the actual time until now i dont' know]
+**What I did**:Recorded and uploaded the video demonstration for Assignment 3.
+
+**Details**:Introduced myself and showed my GitHub repository.
+
+Explained the three synchronization features implemented in my Java program.
+
+Demonstrated how ReentrantLock protects shared data.
+
+Explained how the counting semaphore replaces busy waiting.
+
+Ran the program in VS Code and showed the verification results.
+
+Showed my Git commit history.
+
+Uploaded the video and added its link to MY_WORK.md.
+
+**Challenges**:The main challenge was explaining all three synchronization features clearly within the required 2–3 minutes while showing the code, execution results, and Git commit history.
+
+**Solution**:I prepared a short explanation for each feature and organized the demonstration according to the assignment requirements. I reviewed the code and verification results before recording, then checked the video to make sure the required parts were included.
+
+**Time spent**: not yet tommorw i will start  
 
 ---
 
@@ -240,7 +300,8 @@
 
 **Your Answer:** *(5-7 sentences)*
 
-[Write your answer here.]
+I learned that synchronization is important when multiple threads access the same shared data. Without synchronization two threads may read and update the same variable at the same time, which can cause a race condition in Feature 1  iused ReentrantLock to protect the ready queue from concurrent access in Feature 2 i used another lock to protect the shared statistics and prevent lost updates i also learned why try finally is important for releasing locks even when a problem occurs  in Feature 3 i learned that a counting semaphore can make CPU workers wait for available processes without busy waiting
+
 
 ## Question 2: What was the most challenging part of this assignment?
 
@@ -248,15 +309,18 @@
 
 **Your Answer:** *(5-7 sentences)*
 
-[Write your answer here.]
+The most challenging part of this assignment was Feature 3 because i needed to understand how a counting semaphore works i found it difficult to understand why the semaphore starts with zero permits i also needed to understand how acquire() makes a CPU wait until a process becomes available. Another challenge was handling the shutdown because some CPUs could remain blocked after all processes finished i had to understand when to call release() and how to wake the waiting CPUs i This part was more difficult than using locks because it required controlling both process availability and CPU termination
+
+
+
 
 ## Question 3: How did you overcome the challenges you faced?
 
 > 💡 **TIP:** Describe your method: reading the slides and the documentation, adding `System.out.println` to debug, running the program many times, re-reading the README, testing after each small change, asking for help.
 
 **Your Answer:** *(5-7 sentences)*
+I divided the assignment into three features and worked on them separately i started by reviewing the existing methods to understand which data was shared between threads. I added the locks to the ready queue and shared statistics before working on the semaphore. When implementing Feature 3 i reviewed how processes were added to the queue and how CPU workers waited for them i tested the program several times after making the changes and checked the verification results Running the final program five times helped me confirm that all four verification checks passed
 
-[Write your answer here.]
 
 ## Question 4: Where can synchronization concepts be applied in real-world applications?
 
@@ -264,7 +328,9 @@
 
 **Your Answer:** *(5-7 sentences)*
 
-[Write your answer here.]
+Synchronization is useful in many real-world applications that allow multiple users or threads to access shared resources For example a banking system needs synchronization when two transactions update the same account balance Without proper synchronization one update could overwrite another update and produce an incorrect balance  Online ticket booking systems also use synchronization to prevent two customers from reserving the same seat A printing system can use a shared queue to store print jobs and a semaphore to notify printers when new jobs are available These examples are similar to my assignment because locks protect shared data while semaphores control when workers can process available tasks
+
+
 
 ### Optional: What would you like to learn more about?
 
@@ -298,7 +364,7 @@
 
 **Your Answer:** *(3-5 sentences)*
 
-[Write your answer here.]
+
 
 Verification block of the **original starter**:
 ```
